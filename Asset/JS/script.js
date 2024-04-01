@@ -40,21 +40,51 @@ $(document).ready(function () {
     });
 
     // <!-- emailjs to mail contact form data -->
+    // $("#contact-form").submit(function (event) {
+    //     emailjs.init("pPm7sZk-uSvruJXKr");
+
+    //     emailjs.sendForm('service_x4yam4o', 'template_hpedrdh', '#contact-form')
+    //         .then(function (response) {
+    //             console.log('SUCCESS!', response.status, response.text);
+    //             document.getElementById("contact-form").reset();
+    //             alert("Message Sent! Successfully");
+    //         }, function (error) {
+    //             console.log('FAILED...', error);
+    //             alert("Form Submission Failed! Try Again");
+    //         });
+    //     event.preventDefault();
+    // });
+    // <!-- emailjs to mail contact form data -->
     $("#contact-form").submit(function (event) {
         emailjs.init("pPm7sZk-uSvruJXKr");
-
-        emailjs.sendForm('service_x4yam4o', 'template_hpedrdh', '#contact-form')
-            .then(function (response) {
-                console.log('SUCCESS!', response.status, response.text);
-                document.getElementById("contact-form").reset();
-                alert("Message Sent! Successfully");
-            }, function (error) {
-                console.log('FAILED...', error);
-                alert("Form Submission Failed! Try Again");
-            });
+     
+        // Extract user_email from the form
+        const user_email = document.querySelector('[name="user_email"]').value;
+        const name = document.querySelector('[name="name"]').value;
+        const email = document.querySelector('[name="email"]').value;
+        const phone = document.querySelector('[name="phone"]').value;
+        const message = document.querySelector('[name="message"]').value;
+     
+        emailjs.sendForm('service_x4yam4o', 'template_hpedrdh', '#contact-form', {
+           user_email,
+           name,
+           email,
+           phone,
+           message,
+        })
+        .then(function (response) {
+           console.log('SUCCESS!', response.status, response.text);
+           document.getElementById("contact-form").reset();
+           alert("Message Sent! Successfully");
+        })
+        .catch(function (error) {
+           console.log('FAILED...', error);
+           alert("Form Submission Failed! Try Again");
+        });
+     
         event.preventDefault();
-    });
-    // <!-- emailjs to mail contact form data -->
+     });
+     
 
 });
 
@@ -66,7 +96,7 @@ document.addEventListener('visibilitychange',
         }
         else {
             document.title = "Portfolio | Ranjit ";
-            // $("#favicon").attr("href", "assets/images/favhand.png");
+            $("#favicon").attr("href", "assets/images/favhand.png");
         }
     });
 
